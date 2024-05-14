@@ -1,0 +1,15 @@
+class Errors:
+    error = {"-1":"Ya existe rol",
+             "-2":"No existe rol",
+             "-3":"Ya existe producto",
+             "-4": "No existe el producto",
+             "-6": "El usuario ya existe",
+             "-7": "El usuario no tiene permiso para realizar esta accion",
+             "-8": "No existe cuenta",
+             "-9": "Cuenta desactivada",
+             "-10": "Token no existe",
+             "-11":"Token no valido",
+             "-12":"Lote no existe",
+             "-13":"No existen roles",
+             "-14":"El usuario no existe",
+            }
