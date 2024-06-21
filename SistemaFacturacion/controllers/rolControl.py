@@ -17,7 +17,7 @@ class RolControl:
             rol = Rol()
             rol.nombre = data["nombre"]
             rol.descripcion = data["descripcion"]
-            rol.estado = data["estado"]
+            rol.estado = True
             rol.external_id = uuid.uuid4()
 
             db.session.add(rol)
@@ -40,7 +40,7 @@ class RolControl:
             
             rol.nombre = data["nombre"]
             rol.descripcion = data["descripcion"]
-            rol.estado = data["estado"]
+            rol.estado = True
             rol.external_id = uuid.uuid4()
             # merge para pocos datos
             db.session.merge(rol)

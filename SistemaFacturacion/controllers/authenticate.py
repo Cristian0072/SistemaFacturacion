@@ -1,10 +1,7 @@
 # Proteger rutas
-from flask import Flask, request, jsonify, make_response, current_app
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from flask import request, jsonify, make_response, current_app
 from functools import wraps
 from models.cuenta import Cuenta
-import uuid
 from controllers.utiles.errors import Errors
 import jwt
 
@@ -15,8 +12,8 @@ def token_requerido(f):
     def decodered(*args, **kwargs):
         # los tokens siempre se envian en las cabeceras o headers
         token = None
-        if "X-Acces-Token" in request.headers:
-            token = request.headers["X-Acces-Token"]
+        if "X-Access-Token" in request.headers:
+            token = request.headers["X-Access-Token"]
 
         if not token:
             return make_response(

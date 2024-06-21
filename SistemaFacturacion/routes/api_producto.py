@@ -115,7 +115,7 @@ def guardar_producto():
 @api_producto.route("/producto/<external_id>", methods=["GET"])
 @token_requerido
 # mostrar producto por external_id
-def listar_esternal_id(external_id):
+def listar_external_id(external_id):
     producto = productoC.obtener_external_id(external_id)
     if producto:
         return make_response(

@@ -110,13 +110,13 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6MTcxODkyMTg3My4wODQ4ODV9.NC3_4s0RtpvP14V-7yhsk7hW8RxH1j7u6-7c9lf8p2VWUKPQdzwtRFbDAEAGWAGnuI9iTF3v5i1vcTThA4OvjA",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:5000/persona/759addd4-d8f7-471e-90c5-278e41a24ac0",
+									"raw": "http://localhost:5000/persona/6ff593e9-dbf9-45ae-9695-984f7c98601e",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -124,7 +124,7 @@
 									"port": "5000",
 									"path": [
 										"persona",
-										"759addd4-d8f7-471e-90c5-278e41a24ac0"
+										"6ff593e9-dbf9-45ae-9695-984f7c98601e"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -150,8 +150,8 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6IjIwMjQtMDYtMTcifQ.BP730lKi5V-ulx6a9gbhRyTpeo72mSVmroG5s7dZPYtfHdjrRP34fj6sEpflN_BYK8QnkpQtqoIJoOnIgpFP9Q",
 										"type": "text"
 									}
 								],
@@ -164,6 +164,46 @@
 									"port": "5000",
 									"path": [
 										"persona"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "Listar usuarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6IjIwMjQtMDYtMTcifQ.BP730lKi5V-ulx6a9gbhRyTpeo72mSVmroG5s7dZPYtfHdjrRP34fj6sEpflN_BYK8QnkpQtqoIJoOnIgpFP9Q",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/persona/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"persona",
+										"usuario"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -194,8 +234,8 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6MTcxODc3ODEzNS41NDQ4Nzl9.inwB-J3ICX0UBwqF3PrmAmCspc3rYBPp9Tf1zVkFFtzmbNmwOXyLsPCEnnZsYfV7r4PQmHKAeZSVPVfaLjDlgg",
 										"type": "text"
 									}
 								],
@@ -233,13 +273,13 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6IjFiODRkMTFjLWE0ODYtNDZlYi04ZDAwLTNjOGU0YjQ4NTBlNiIsImV4cGlyYSI6IjIwMjQtMDUtMTQgMDE6MTA6MjQuMzE3NDMwIn0.Z8KvnalwUT5t5p6WPkB3h9TfoBNpBETvdr2pUS2TcmQQpOzctZrCHqsuHYE2kmWI7Q6wh5hDiDrPaz0BBoZ4sg",
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6MTcxODgzNjA2OC41MzM5Mjd9.F23LnW0gopBsRJnYhxXhilqOgi331bHmz8bs930QI4ZotF64QBu-RqsZhuAXgfeRsPiG_SBcqMyfzDjjYFENWQ",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:5000/producto/679898dc-3b89-4f64-a6bf-b04e78506d4c",
+									"raw": "http://localhost:5000/producto/562d2114-4a02-4c42-9f2b-d6a9270495fe",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -247,7 +287,7 @@
 									"port": "5000",
 									"path": [
 										"producto",
-										"679898dc-3b89-4f64-a6bf-b04e78506d4c"
+										"562d2114-4a02-4c42-9f2b-d6a9270495fe"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -331,7 +371,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "    {\n    \"nombre\": \"USUARIO\",\n    \"descripcion\": \"Rol para usuario\",\n    \"estado\":true\n    }",
+									"raw": "    {\n    \"nombre\": \"USUARIO\",\n    \"descripcion\": \"Rol para usuario\"\n    }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -421,7 +461,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "    {\n    \"nombre\": \"ADMINISTRADOR\",\n    \"estado\": true,\n    \"descripcion\": \"Rol para administrador\"\n    }",
+									"raw": "    {\n    \"nombre\": \"ADMINISTRADOR\",\n    \"descripcion\": \"Rol para administrador\"\n    }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -626,6 +666,110 @@
 							"response": []
 						},
 						{
+							"name": "Guardar archivo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "payload",
+											"value": "{}",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6MTcxODkyMTg3My4wODQ4ODV9.NC3_4s0RtpvP14V-7yhsk7hW8RxH1j7u6-7c9lf8p2VWUKPQdzwtRFbDAEAGWAGnuI9iTF3v5i1vcTThA4OvjA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "archivo",
+											"description": "Imagen ",
+											"type": "file",
+											"src": "/home/master/Pictures/Screenshots/Captura de pantalla_área-de-selección_20240618192242.png"
+										},
+										{
+											"key": "data",
+											"value": "{ \"external\": \"6ff593e9-dbf9-45ae-9695-984f7c98601e\" }",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/persona/archivo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"persona",
+										"archivo"
+									],
+									"query": [
+										{
+											"key": "archivo",
+											"value": null,
+											"disabled": true
+										}
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
 							"name": "Iniciar sesion",
 							"event": [
 								{
@@ -683,7 +827,14 @@
 									]
 								},
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "    {\n    \"usuario\": \"robert.zambrano@hotmail.es\",\n    \"clave\": \"R@berto158\"\n    }",
@@ -955,14 +1106,14 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
+										"key": "X-Access-Token",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImRiMmY3OWI2LTJkNmYtNDkzOC05NmUzLWQ2MTJjOGU4YjZiNiIsImV4cGlyYSI6MTcxODczMjI4My40NjYzMzR9.-9UyjK09BezBpjzf3n1GOfuvuUpHuU_kf4LZrHnE3aGcSb71a4O01DhqJKUhOvcJdTEiqpx-xz1Y5kc4wwwFZA",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"nombre\": \"Queso\",\n    \"marca\": \"El Rancho\",\n    \"fecha_fabricacion\": \"01/05/2024\",\n    \"fecha_expiracion\": \"13/05/2024\",\n    \"cantidad_stock\": 10,\n    \"codigo\": \"ER-QS-026\",\n    \"descripcion\": \"Queso fresco hecho a partir de leche pasteurizada\"\n}\n",
+									"raw": "{\n    \"nombre\": \"Atún en lata\",\n    \"marca\": \"Real\",\n    \"fecha_fabricacion\": \"14/05/2024\",\n    \"fecha_expiracion\": \"14/05/2026\",\n    \"cantidad_stock\": 50,\n    \"codigo\": \"RL-AN-001\",\n    \"descripcion\": \"Atún en lata de buena calidad, alto en nutrientes\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1046,13 +1197,13 @@
 								"header": [
 									{
 										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6IjFiODRkMTFjLWE0ODYtNDZlYi04ZDAwLTNjOGU0YjQ4NTBlNiIsImV4cGlyYSI6IjIwMjQtMDUtMTQgMDE6MTA6MjQuMzE3NDMwIn0.Z8KvnalwUT5t5p6WPkB3h9TfoBNpBETvdr2pUS2TcmQQpOzctZrCHqsuHYE2kmWI7Q6wh5hDiDrPaz0BBoZ4sg",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{    \"cantidad_stock\": 10,\n        \"descripcion\": \"Yogurt natural sin azúcar\",\n        \"fecha_expiracion\": \"25/05/2024\",\n        \"fecha_fabricacion\": \"10/05/2024\",\n        \"marca\": \"Toni\",\n        \"nombre\": \"Yogurt Natural\"\n}",
+									"raw": "{    \"cantidad_stock\": 10,\n        \"descripcion\": \"Atún en lata de buena calidad, alto en nutrientes\",\n        \"fecha_expiracion\": \"25/05/2024\",\n        \"fecha_fabricacion\": \"10/05/2024\",\n        \"marca\": \"Real\",\n        \"nombre\": \"Atún en lata\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1060,7 +1211,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:5000/producto/modificar/679898dc-3b89-4f64-a6bf-b04e78506d4c",
+									"raw": "http://localhost:5000/producto/modificar/f15771c3-d2c8-425d-992c-004a42c8640e",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1069,7 +1220,7 @@
 									"path": [
 										"producto",
 										"modificar",
-										"679898dc-3b89-4f64-a6bf-b04e78506d4c"
+										"f15771c3-d2c8-425d-992c-004a42c8640e"
 									]
 								},
 								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -1137,7 +1288,7 @@
 								"header": [
 									{
 										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6IjgyZWMyNTc1LWVkNTAtNDE0ZS1hZGMyLTc3NDllMmRjZWEzYSIsImV4cGlyYSI6IjIwMjQtMDUtMTMgMTk6NTE6MTYuNjkxMjM0In0.54hQ9xTcSmGmxuWKd4lH4bE8smMeCf0P65-vXXTKuM_j7aUA5x95_BVm17rRyISJHfviZVSavj9DMSwBoZz5zg",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
 										"type": "text"
 									}
 								],
@@ -1186,13 +1337,13 @@
 								"header": [
 									{
 										"key": "X-Acces-Token",
-										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6IjgyZWMyNTc1LWVkNTAtNDE0ZS1hZGMyLTc3NDllMmRjZWEzYSIsImV4cGlyYSI6IjIwMjQtMDUtMTMgMDU6MjI6MjAuOTM5Njk0In0.UohjiO1TiRvZSj54DLJiH15HU2oMQUM1iII8K2XfsqZVY8BlOqnpPgtRiLppP90DuRuh0-l4tF1ZMkwIZj4_bQ",
+										"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHRlcm5hbCI6ImE3MzQwNGI4LTI2OGQtNDU4NC05YTg4LWI4NmY1NzE5YjM1YiIsImV4cGlyYSI6IjIwMjQtMDUtMTMifQ._kg8I3IIIETXNHs4JdYTX05-v2LaX4urH4armrL6CO_6MoXIx-6p-c07HXor1dbvIfu2ixelA2pMdoENNDFB2w",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"estado\":\"A PUNTO DE CADUCAR\"\n}",
+									"raw": "{\n    \"estado\":\"BUENO\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"

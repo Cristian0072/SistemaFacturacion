@@ -3,6 +3,7 @@ from datetime import datetime
 from models.factura import Factura
 from models.rol import Rol
 from models.cuenta import Cuenta
+from models.archivo import Archivo
 import copy
 
 
@@ -16,12 +17,14 @@ class Persona(db.Model):
     actualizar = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     rol_id = db.Column(db.Integer, db.ForeignKey("rol.id"))
     # relacion de uno a muchos con Factura
-    factura = db.relationship("Factura", backref="persona", lazy = True)
+    factura = db.relationship("Factura", backref="persona", lazy=True)
     # relacion de uno a muchos con Rol
-    rol = db.relationship("Rol", backref="persona", lazy = True)
+    rol = db.relationship("Rol", backref="persona", lazy=True)
     # relacion de uno a uno con Cuenta
-    cuenta = db.relationship("Cuenta", backref="persona", uselist=False, lazy = True)
-   
+    cuenta = db.relationship("Cuenta", backref="persona", uselist=False, lazy=True)
+    # relacion de uno a muchos con Archivo
+    archivo = db.relationship("Archivo", backref="persona", lazy=True)
+
     @property
     def serialize(self):
         # devuelve un diccionario
@@ -32,6 +35,7 @@ class Persona(db.Model):
             "external_id": self.external_id,
             "cuenta": self.cuenta.serialize if self.cuenta else None,
             "rol": self.rol.serialize if self.rol else None,
+            "archivo": [archivo.serialize for archivo in self.archivo] if self.archivo else None
         }
 
     # copiar persona

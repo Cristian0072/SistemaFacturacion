@@ -20,6 +20,8 @@ class Producto(db.Model):
 
     # relacion de uno a muchos con Lote
     lote = db.relationship("Lote", backref="producto", lazy=True)
+    # relacion de uno a muchos con Archivo
+    #archivo = db.relationship("Archivo", backref="producto", lazy=True)
 
     # serializar
     @property
@@ -28,7 +30,7 @@ class Producto(db.Model):
         return {
             "nombre": self.nombre,
             "cantidad_stock": self.cantidad_stock,
-            "estado": self.estado.value,
+            "estado": self.estado.name if self.estado else None,
             "external_id": self.external_id,
             "marca": self.marca,
             "codigo": self.codigo,

@@ -12,14 +12,14 @@ schema_rol = {
     "type": "object",
     "properties": {
         "nombre": {"type": "string"},
-        "descripcion": {"type": "string",
-        "estado": "boolean"},
+        "descripcion": {"type": "string"},
     },
-    "required": ["nombre", "descripcion","estado"],
+    "required": ["nombre", "descripcion"],
 }
 
 # api para listar rol
 @api_rol.route("/rol")
+@token_requerido
 def listar():
     return make_response(
         jsonify(
@@ -58,6 +58,7 @@ def guardar_rol():
 
 # API para mostrar rol por external_id
 @api_rol.route("/rol/<external_id>", methods=["GET"])
+@token_requerido
 def listar_external_id(external_id):
     rol = rolC.obtener_external_id(external_id)
     if rol:

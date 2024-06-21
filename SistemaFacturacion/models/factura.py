@@ -1,7 +1,7 @@
 from app import db
 from datetime import datetime
 from models.detalleFactura import DetalleFactura
-
+from models.archivo import Archivo
 
 class Factura(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +16,8 @@ class Factura(db.Model):
     actualizar = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     #realcion de uno a uno con detalle factura
     detalle = db.relationship("DetalleFactura", backref="factura", foreign_keys=detalle_id,uselist= False, lazy=True)
+    # relacion de uno a muchos con Archivo
+    #archivo = db.relationship("Archivo", backref="factura", lazy=True)
 
     @property
     def serialize(self):

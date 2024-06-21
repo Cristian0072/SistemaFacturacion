@@ -15,7 +15,7 @@ class Cuenta(db.Model):
    
     def getPersona(self, id_p):
         from models.persona import Persona
-        return Persona.query.filter_by(id = id_p).first()
+        return Persona.query.filter_by(id = id_p ).first()
    
     @property
     def serialize(self):

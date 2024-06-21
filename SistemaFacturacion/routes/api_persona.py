@@ -17,27 +17,47 @@ schema_persona = {
             "type": "string",
             "pattern": "^[0-9]+$",
             "message": "Solo se permiten numeros",
+            "minLength": 10,
+            "maxLength": 10,
         },
         "usuario": {
             "type": "string",
             "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
             "message": "El usuario debe ser un correo electronico valido",
+            "maxLength": 30,
         },
         "clave": {
             "type": "string",
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
             "message": "La clave debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
+            "minLength": 8,
+            "maxLength": 30,
         },
         "rol": {"type": "string"},
     },
-    "required": ["nombres", "apellidos", "identificacion", "usuario", "clave","rol"],
+    "required": ["nombres", "apellidos", "identificacion", "usuario", "clave", "rol"],
+}
+
+schema_informacion_personal = {
+    "type": "object",
+    "properties": {
+        "nombres": {"type": "string"},
+        "apellidos": {"type": "string"},
+        "identificacion": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "message": "Solo se permiten numeros",
+            "minLength": 10,
+            "maxLength": 10,
+        },
+    },
+    "required": ["nombres", "apellidos", "identificacion"],
 }
 
 schema_sesion = {
     "type": "object",
     "properties": {
         "usuario": {
-            "type": "string",
             "type": "string",
             "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
             "message": "El usuario debe ser un correo electronico valido",
@@ -68,6 +88,22 @@ def listar():
     )
 
 
+# api para listar persona
+@api_persona.route("/persona/usuario")
+@token_requerido
+def listar_usuarios():
+    return make_response(
+        jsonify(
+            {
+                "msg": "OK",
+                "code": 200,
+                "datos": ([i.serialize for i in personaC.listar_usuario()]),
+            }
+        ),
+        200,
+    )
+
+
 # api para guardar persona
 @api_persona.route("/persona/guardar", methods=["POST"])
 @token_requerido
@@ -76,11 +112,12 @@ def listar():
 def guardar():
     # data en json
     data = request.json
+
     id = personaC.guardar(data)
 
     if id >= 0:
         return make_response(
-            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Persona guardada"}}),
+            jsonify({"msg": "OK", "code": 200, "datos": {"tag": "Persona guardada"}}),
             200,
         )
     else:
@@ -114,18 +151,64 @@ def listar_external_id(external_id):
         )
 
 
+# api para obtener archivos de persona
+@api_persona.route("/persona/archivo/<external>", methods=["GET"])
+@token_requerido
+def listar_archivos(external):
+    return make_response(
+        jsonify(
+            {
+                "msg": "OK",
+                "code": 200,
+                "datos": [i.serialize for i in personaC.obtener_archivos(external)],
+            }
+        ),
+        200,
+    )
+
+
+# api para obtener foto de perfil
+@api_persona.route("/persona/foto/<external>", methods=["GET"])
+@token_requerido
+def obtener_foto(external):
+    archivo = personaC.obtener_foto(external)
+
+    if isinstance(archivo, int):
+        return make_response(
+            jsonify(
+                {
+                    "msg": "Error",
+                    "code": 404,
+                    "data": {"error": Errors.error[str(archivo)]},
+                }
+            ),
+            404,
+        )
+    else:
+       return make_response(
+            jsonify({"msg": "OK", "code": 200, "datos": archivo.serialize}),
+            200,
+        )
+
 # api para modificar persona
 @api_persona.route("/persona/modificar/<external_id>", methods=["POST"])
-@expects_json(schema_persona)
+@expects_json(schema_informacion_personal)
 @token_requerido
 def modificar(external_id):
 
     data = request.json
-    persona = personaC.modificar(data, external_id)
+    persona, external = personaC.modificar(data, external_id)
 
-    if persona:
+    if persona >= 0:
         return make_response(
-            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Datos de persona modificados"}}),
+            jsonify(
+                {
+                    "msg": "OK",
+                    "code": 200,
+                    "datos": {"tag": "Datos de persona modificados"},
+                    "external": external,
+                }
+            ),
             200,
         )
     else:
@@ -139,6 +222,30 @@ def modificar(external_id):
             ),
             400,
         )
+
+
+# api para guardar archivo
+@api_persona.route("/persona/archivo", methods=["POST"])
+@token_requerido
+def guardar_archivo():
+    archivo = request.files.get("archivo")
+    data = request.form.get("external")
+    
+    id = personaC.guardar_archivo(data, archivo)
+
+    if id >= 0:
+        return make_response(
+            jsonify({"msg": "OK", "code": 200, "datos": {"tag": "Archivo guardado"}}),
+            200,
+        )
+    else:
+        return make_response(
+            jsonify(
+                {"msg": "ERROR", "code": 400, "datos": {"error": Errors.error[str(id)]}}
+            ),
+            400,
+        )
+
 
 # api para modificar estado de cuenta de persona
 @api_persona.route("/persona/estado-actualizar/<external>", methods=["POST"])
@@ -149,7 +256,13 @@ def modificar_estado(external):
 
     if persona:
         return make_response(
-            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Estado de cuenta modificado"}}),
+            jsonify(
+                {
+                    "msg": "OK",
+                    "code": 200,
+                    "datos": {"tag": "Estado de cuenta modificado"},
+                }
+            ),
             200,
         )
     else:
@@ -163,6 +276,7 @@ def modificar_estado(external):
             ),
             400,
         )
+
 
 # api_persona para inicar sesion
 @api_persona.route("/sesion", methods=["POST"])
@@ -185,7 +299,7 @@ def iniciar_sesion():
     else:
         return make_response(
             jsonify(
-                {"msg": "OK", "code": 200, "Mensaje": "Bienvenido :)","datos": persona}
+                {"msg": "OK", "code": 200, "Mensaje": "Bienvenido :)", "datos": persona}
             ),
             200,
         )
