@@ -1,0 +1,1 @@
+ /home/master/Documents/True/sistema_facturacion_movil/.dart_tool/flutter_build/14bf85ff89a8ff2473847ffb1bebbd79/native_assets.yaml: 
