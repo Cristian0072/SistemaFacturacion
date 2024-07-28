@@ -72,16 +72,14 @@ class PersonaControl:
             os.makedirs(dir)
 
         if archivo:
-            # se obtiene el nombre del archivo
-            nombre = secure_filename(archivo.filename)
+            # se obtiene la extensión del archivo ". + extensión"
+            extension = os.path.splitext(archivo.filename)[1].lower()
+            # se crea el nombre del archivo
             fecha = datetime.now().strftime("%Y%m%d%H%M%S")
-            nombre = fecha + "_" + nombre
+            nombre = "IMG_" + fecha + extension
             print(nombre)
-            # se obtiene la extension del archivo
-            extension = nombre.rsplit(".", 1)[1].lower()
-            print(extension)
             # se valida si la extension es permitida
-            if extension in EXTENSIONES:
+            if extension.lstrip(".") in EXTENSIONES:
                 # se valida el tamanio del archivo
                 if archivo.content_length <= MAX_TAMANO:
                     # se construye la ruta del archivo
@@ -128,11 +126,13 @@ class PersonaControl:
         else:
             return -14
 
-    #metodo para obtener foto de perfil
+    # metodo para obtener foto de perfil
     def obtener_foto(self, external):
         persona = Persona.query.filter_by(external_id=external).first()
         if persona:
-            archivo = Archivo.query.filter_by(persona_id=persona.id, estado=True).first()
+            archivo = Archivo.query.filter_by(
+                persona_id=persona.id, estado=True
+            ).first()
             if archivo:
                 return archivo
             else:
@@ -188,7 +188,7 @@ class PersonaControl:
 
         if cuenta:
             cuenta.estado = False
-
+            cuenta.external_id = uuid.uuid4()
             # Guardar los cambios en la base de datos
             db.session.merge(cuenta)
             db.session.commit()
@@ -196,15 +196,34 @@ class PersonaControl:
         else:
             return -4
 
-    # inicio de sesion
+    # metodo para modificar credenciales de una cuenta de persona
+    def modificar_credenciales(self, data):
+        clave = hashlib.sha256(data["clave_actual"].encode()).hexdigest()
+        cuenta = Cuenta.query.filter_by(
+            usuario=data["usuario_actual"], clave=clave
+        ).first()
+
+        if cuenta:
+            cuenta.usuario = data["nuevo_usuario"]
+            cuenta.clave = hashlib.sha256(data["nueva_clave"].encode()).hexdigest()
+            cuenta.external_id = uuid.uuid4()
+
+            db.session.merge(cuenta)
+            db.session.commit()
+            return cuenta.id
+        else:
+            return -8
+
+    # inicio de sesion para una persona
     def inicio_sesion(self, data):
         # obtiene el primer correo que coincida en la bd
         cuentaA = Cuenta.query.filter_by(usuario=data["usuario"]).first()
-        per = Persona.query.filter_by(id=cuentaA.persona_id).first()
-        rol = Rol.query.filter_by(id=per.rol_id,nombre="ADMINISTRADOR").first()
 
-        if rol:
-            if cuentaA:
+        if cuentaA:
+            per = Persona.query.filter_by(id=cuentaA.persona_id).first()
+            rol = Rol.query.filter_by(id=per.rol_id).first()
+
+            if rol:
                 # encriptar clave
                 clave = hashlib.sha256(data["clave"].encode()).hexdigest()
                 # comparar clave
@@ -226,7 +245,7 @@ class PersonaControl:
 
                         info = {
                             "token": token,
-                            "usuario": persona.apellidos + " " + persona.nombres,
+                            "usuario": persona.nombres + " " + persona.apellidos,
                             "expira": expira.timestamp(),
                             "external": persona.external_id,
                         }
@@ -237,6 +256,6 @@ class PersonaControl:
                 else:
                     return -8
             else:
-                return -8
+                return -7
         else:
-            return -7
+            return -8

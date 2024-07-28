@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pymysql
 
 pymysql.install_as_MySQLdb()
-import MySQLdb
+#import MySQLdb
 
 # import config.config
 
@@ -21,10 +21,12 @@ def create_app():
         from routes.api_producto import api_producto
         from routes.api_rol import api_rol
         from routes.api_persona import api_persona
-     
+        from routes.api_sucursal import api_sucursal
+
         app.register_blueprint(api_producto)
         app.register_blueprint(api_rol)
         app.register_blueprint(api_persona)
+        app.register_blueprint(api_sucursal)
 
         # Creacion de tablas en la base de datos
         db.create_all()

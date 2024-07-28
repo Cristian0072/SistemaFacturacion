@@ -1,6 +1,7 @@
 from models.lote import Lote
 from models.producto import Producto
 from models.Estado import Estado
+from models.sucursal import Sucursal
 from app import db
 from datetime import datetime, timedelta
 import uuid
@@ -45,6 +46,11 @@ class ProductoControl:
                 producto.codigo = data["codigo"]
                 producto.descripcion = data["descripcion"]
 
+                sucursal = Sucursal.query.filter_by(
+                    external_id=data["external_id"]
+                ).first()
+                producto.sucursal_id = sucursal.id
+
                 db.session.add(producto)
                 db.session.commit()
         else:
@@ -58,6 +64,7 @@ class ProductoControl:
 
         db.session.add(lote)
         db.session.commit()
+
         return lote.id
 
     def verificar_estado(fecha):
@@ -134,7 +141,9 @@ class ProductoControl:
         # Busca todos los lotes
         fecha_actual = datetime.now().date()
         fecha_límite = fecha_actual + timedelta(days=5)
-        lotes = Lote.query.filter(Lote.fecha_expiracion.between(fecha_actual, fecha_límite)).all()
+        lotes = Lote.query.filter(
+            Lote.fecha_expiracion.between(fecha_actual, fecha_límite)
+        ).all()
 
         if lotes:
             for lote in lotes:
@@ -157,3 +166,8 @@ class ProductoControl:
         # Devuelve todos los productos que tienen el estado ingresado
         self.actualizar_estado()
         return Producto.query.filter_by(estado=estado).all()
+
+    def obtener_productos_por_estado_sucursal(self, estado, id):
+        self.actualizar_estado()
+
+        return Producto.query.filter_by(estado=estado, sucursal_id=id).all()

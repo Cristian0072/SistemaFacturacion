@@ -23,22 +23,27 @@ schema_producto = {
             "pattern": "^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/([1-2][0-9]{3})$",
             "message": "Fecha no valida",
         },
-        "cantidad_stock": {"type": "integer",
-                            "pattern": "^[0-9]+$",
-            "message": "Solo se permiten numeros"},
+        "cantidad_stock": {
+            "type": "integer",
+            "pattern": "^[0-9]+$",
+            "message": "Solo se permiten numeros",
+        },
         "marca": {"type": "string"},
-        "codigo": {"type": "string",
-                   "pattern": "^[A-Za-z0-9-]+$",
-                   "message": "Solo se permiten letras, guiones y numeros"},
+        "codigo": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9-]+$",
+            "message": "Solo se permiten letras, guiones y numeros",
+        },
         "descripcion": {"type": "string"},
     },
     "required": [
         "nombre",
+        "fecha_fabricacion",
         "fecha_expiracion",
         "cantidad_stock",
         "marca",
         "codigo",
-        "descripcion"
+        "descripcion",
     ],
 }
 
@@ -56,9 +61,11 @@ schema_produ = {
             "pattern": "^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/([1-2][0-9]{3})$",
             "message": "Fecha no valida",
         },
-        "cantidad_stock": {"type": "integer",
-                            "pattern": "^[0-9]+$",
-            "message": "Solo se permiten numeros"},
+        "cantidad_stock": {
+            "type": "integer",
+            "pattern": "^[0-9]+$",
+            "message": "Solo se permiten numeros",
+        },
         "marca": {"type": "string"},
         "descripcion": {"type": "string"},
     },
@@ -67,9 +74,10 @@ schema_produ = {
         "fecha_expiracion",
         "cantidad_stock",
         "marca",
-        "descripcion"
+        "descripcion",
     ],
 }
+
 
 # api para producto
 @api_producto.route("/producto")
@@ -100,7 +108,8 @@ def guardar_producto():
 
     if id >= 0:
         return make_response(
-            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Producto guardado"}}), 200
+            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Producto guardado"}}),
+            200,
         )
     else:
         return make_response(
@@ -171,7 +180,13 @@ def actualizar_estado():
 
     if id >= 0:
         return make_response(
-            jsonify({"msg": "OK", "code": 200, "data": {"tag": "Estados de productos actualizados"}}),
+            jsonify(
+                {
+                    "msg": "OK",
+                    "code": 200,
+                    "data": {"tag": "Estados de productos actualizados"},
+                }
+            ),
             200,
         )
     else:
@@ -183,7 +198,7 @@ def actualizar_estado():
         )
 
 
-# api para listar los productos por estados 
+# api para listar los productos por estados
 @api_producto.route("/producto/estado", methods=["POST"])
 @token_requerido
 # listar estados de producto

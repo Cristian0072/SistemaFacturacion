@@ -64,15 +64,44 @@ schema_sesion = {
         },
         "clave": {
             "type": "string",
-            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-            "message": "La clave debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
         },
     },
     "required": ["usuario", "clave"],
 }
 
+schema_credenciales = {
+    "type": "object",
+    "properties": {
+        "usuario_actual": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+            "message": "El usuario debe ser un correo electronico valido",
+        },
+        "clave_actual": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+            "message": "La clave debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
+            "minLength": 8,
+            "maxLength": 30,
+        },
+        "nuevo_usuario": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+            "message": "El usuario debe ser un correo electronico valido",
+        },
+        "nueva_clave": {
+            "type": "string",
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+            "message": "La clave debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial",
+            "minLength": 8,
+            "maxLength": 30,
+        },
+    },
+    "required": ["usuario_actual", "clave_actual", "nuevo_usuario", "nueva_clave"],
+}
 
-# api para listar persona
+
+# api para listar personas
 @api_persona.route("/persona")
 @token_requerido
 def listar():
@@ -88,7 +117,7 @@ def listar():
     )
 
 
-# api para listar persona
+# api para listar personas de tipo usuario
 @api_persona.route("/persona/usuario")
 @token_requerido
 def listar_usuarios():
@@ -144,7 +173,7 @@ def listar_external_id(external_id):
                 {
                     "msg": "Error",
                     "code": 404,
-                    "data": {"error": "Persona no encontrado"},
+                    "datos": {"error": "Persona no encontrado"},
                 }
             ),
             404,
@@ -179,16 +208,17 @@ def obtener_foto(external):
                 {
                     "msg": "Error",
                     "code": 404,
-                    "data": {"error": Errors.error[str(archivo)]},
+                    "datos": {"error": Errors.error[str(archivo)]},
                 }
             ),
             404,
         )
     else:
-       return make_response(
+        return make_response(
             jsonify({"msg": "OK", "code": 200, "datos": archivo.serialize}),
             200,
         )
+
 
 # api para modificar persona
 @api_persona.route("/persona/modificar/<external_id>", methods=["POST"])
@@ -230,7 +260,7 @@ def modificar(external_id):
 def guardar_archivo():
     archivo = request.files.get("archivo")
     data = request.form.get("external")
-    
+
     id = personaC.guardar_archivo(data, archivo)
 
     if id >= 0:
@@ -261,6 +291,38 @@ def modificar_estado(external):
                     "msg": "OK",
                     "code": 200,
                     "datos": {"tag": "Estado de cuenta modificado"},
+                }
+            ),
+            200,
+        )
+    else:
+        return make_response(
+            jsonify(
+                {
+                    "msg": "ERROR",
+                    "code": 400,
+                    "datos": {"error": Errors.error[str(persona)]},
+                }
+            ),
+            400,
+        )
+
+
+# api para modificar credenciales de usuario
+@api_persona.route("/persona/credenciales", methods=["POST"])
+@token_requerido
+@expects_json(schema_credenciales)
+def modificar_credenciales():
+    data = request.json
+    persona = personaC.modificar_credenciales(data)
+
+    if persona:
+        return make_response(
+            jsonify(
+                {
+                    "msg": "OK",
+                    "code": 200,
+                    "datos": {"tag": "Credenciales modificadas"},
                 }
             ),
             200,

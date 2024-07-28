@@ -17,11 +17,10 @@ class Producto(db.Model):
     crear = db.Column(db.DateTime, default=datetime.now)
     actualizar = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     detalle_id = db.Column(db.Integer, db.ForeignKey("detalle_factura.id"))
+    sucursal_id = db.Column(db.Integer, db.ForeignKey("sucursal.id"))
 
     # relacion de uno a muchos con Lote
     lote = db.relationship("Lote", backref="producto", lazy=True)
-    # relacion de uno a muchos con Archivo
-    #archivo = db.relationship("Archivo", backref="producto", lazy=True)
 
     # serializar
     @property
@@ -30,12 +29,12 @@ class Producto(db.Model):
         return {
             "nombre": self.nombre,
             "cantidad_stock": self.cantidad_stock,
-            "estado": self.estado.name if self.estado else None,
+            "estado": self.estado.value if self.estado else None,
             "external_id": self.external_id,
             "marca": self.marca,
             "codigo": self.codigo,
             "descripcion": self.descripcion,
-            "lote": [lote.serialize for lote in self.lote]
+            "lote": [lote.serialize for lote in self.lote],
         }
 
     # copiar producto
