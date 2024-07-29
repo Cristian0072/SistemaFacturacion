@@ -40,7 +40,9 @@ class SucursalControl:
 
     def guardar_sucursal(self, data):
 
-        sucu = Sucursal.query.filter_by(nombre=data["nombre"]).first()
+        sucu = Sucursal.query.filter_by(
+            nombre=data["nombre"], direccion=data["direccion"]
+        ).first()
         if sucu:
             return -20
         else:

@@ -1,4 +1,4 @@
-#Sat Jul 27 23:01:13 ECT 2024
+#Sun Jul 28 23:38:37 ECT 2024
 base.0=/home/master/Documents/True/sistema_facturacion_movil/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/master/Documents/True/sistema_facturacion_movil/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
 base.2=/home/master/Documents/True/sistema_facturacion_movil/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
